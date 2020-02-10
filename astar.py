@@ -35,7 +35,8 @@ class AStar(tk.Frame):
         self.control_panel.columnconfigure(2, weight=1)
         self.start_btn = tk.Button(self.control_panel, relief="solid", text="Start", bd=2, bg="white")
         self.context_lbl = tk.Label(self.control_panel, textvariable=self.context, bg="white")
-        self.clear_btn = tk.Button(self.control_panel, relief="solid", text="Clear map", bd=2, bg="white")
+        self.clear_btn = tk.Button(self.control_panel, command=self.clear_map,
+                                   relief="solid", text="Clear map", bd=2, bg="white")
         self.start_btn.grid(row=0, column=0, sticky="ew")
         self.context_lbl.grid(row=0, column=1, sticky="ew")
         self.clear_btn.grid(row=0, column=2, sticky="ew")
@@ -76,3 +77,9 @@ class AStar(tk.Frame):
         if self.color_flag and event.widget.cget("bg") != "green" and event.widget.cget("bg") != "red":
             event.widget.configure(bg=self.current_color)
             event.widget.configure(activebackground=self.current_color)
+
+    def clear_map(self):
+        """Iterate through whole map and clear every wall"""
+        for child in self.winfo_children():
+            if child.cget("bg") != "white" and child.cget("bg") != "green" and child.cget("bg") != "red":
+                child.configure(bg="white", activebackground="white")
