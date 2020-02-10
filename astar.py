@@ -68,15 +68,13 @@ class AStar(tk.Frame):
         # Color currently clicked Node, its added because color function works only when you entering Node and not when
         # you are clicking on it.
         if event.widget.cget("bg") != "green" and event.widget.cget("bg") != "red":
-            event.widget.configure(bg=self.current_color)
-            event.widget.configure(activebackground=self.current_color)
+            event.widget.configure(bg=self.current_color, activebackground=self.current_color)
 
     def color(self, event):
         """When flag is set, color Node on which mouse is currently hovering on. Start and end points cannot be colored
         or erased"""
         if self.color_flag and event.widget.cget("bg") != "green" and event.widget.cget("bg") != "red":
-            event.widget.configure(bg=self.current_color)
-            event.widget.configure(activebackground=self.current_color)
+            event.widget.configure(bg=self.current_color, activebackground=self.current_color)
 
     def clear_map(self):
         """Iterate through whole map and clear every wall"""
