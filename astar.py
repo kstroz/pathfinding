@@ -47,7 +47,7 @@ class AStar(tk.Frame):
         self.grid_slaves(self.width - 1, self.height - 1)[0].configure(bg="red", activebackground="red")
 
         # Control Panel
-        self.control_panel.grid(row=20, columnspan=20, sticky="EW")
+        self.control_panel.grid(row=self.height, columnspan=self.width, sticky="EW")
 
     def color_trigger(self, event):
         """Method for triggering right color. If scroll is pressed stop coloring map, the left mouse button is used to
