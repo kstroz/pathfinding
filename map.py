@@ -56,7 +56,7 @@ class Map(tk.Frame):
         self.map[self.rows - 1][self.columns - 1].configure(bg="red", activebackground="red")
 
         # Control Panel
-        self.control_panel.grid(row=self.columns, columnspan=self.rows, sticky="EW")
+        self.control_panel.grid(row=self.rows, columnspan=self.columns, sticky="EW")
 
     def color_trigger(self, event):
         """Method for triggering right color. If scroll is pressed stop coloring map, the left mouse button is used to
