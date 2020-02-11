@@ -86,10 +86,12 @@ class Map(tk.Frame):
 
     def clear_map(self):
         """Iterate through whole map and clear every wall"""
-        for child in self.winfo_children():
-            if child.cget("bg") != "white" and child.cget("bg") != "green" and child.cget("bg") != "red":
-                child.configure(bg="white", activebackground="white")
+        for row in self.map:
+            for col in row:
+                if col.cget("bg") != "white" and col.cget("bg") != "green" and col.cget("bg") != "red":
+                    col.configure(bg="white", activebackground="white")
 
     def start(self):
         """Start algorithm depending on implementation"""
         pass
+
