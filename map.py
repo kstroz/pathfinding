@@ -21,10 +21,10 @@ class Map(tk.Frame):
 
         # Create map with size of x == width and y == height, weights are used to make this map responsive for all
         # resizing user is doing with the main window. Save reference from each button in map variable.
-        for row in range(self.columns):
+        for row in range(self.rows):
             self.rowconfigure(row, weight=1)
             self.tmp = []
-            for column in range(self.rows):
+            for column in range(self.columns):
                 self.columnconfigure(column, weight=1)
                 btn = n.Node(self, relief="solid", bg="white", activebackground="white", bd=2)
                 btn.bind("<Button-1>", self.color_trigger)
@@ -50,10 +50,10 @@ class Map(tk.Frame):
         self.clear_btn.grid(row=0, column=2, sticky="ew")
 
         # Start point of map
-        self.grid_slaves(0, 0)[0].configure(bg="green", activebackground="green")
+        self.map[0][0].configure(bg="green", activebackground="green")
 
         # End point of map
-        self.grid_slaves(self.rows - 1, self.columns - 1)[0].configure(bg="red", activebackground="red")
+        self.map[self.rows - 1][self.columns - 1].configure(bg="red", activebackground="red")
 
         # Control Panel
         self.control_panel.grid(row=self.columns, columnspan=self.rows, sticky="EW")
