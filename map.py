@@ -3,11 +3,14 @@ import node as n
 
 
 class Map(tk.Frame):
-    def __init__(self, parent, width, height, *args, **kwargs):
+    def __init__(self, parent, rows, columns, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
         # Variables for declaring how big generated map will be
-        self.width = width
-        self.height = height
+        self.rows = rows
+        self.columns = columns
+
+        # Variable for storing reference to each node on map.
+        self.map = []
 
         # Variables for declaring which color is currently used and if cursor should color Nodes at all
         self.current_color = "white"
@@ -17,10 +20,11 @@ class Map(tk.Frame):
         self.context = tk.StringVar(value="Doing nothing")
 
         # Create map with size of x == width and y == height, weights are used to make this map responsive for all
-        # resizing user is doing with the main window
-        for row in range(self.width):
+        # resizing user is doing with the main window. Save reference from each button in map variable.
+        for row in range(self.columns):
             self.rowconfigure(row, weight=1)
-            for column in range(self.height):
+            self.tmp = []
+            for column in range(self.rows):
                 self.columnconfigure(column, weight=1)
                 btn = n.Node(self, relief="solid", bg="white", activebackground="white", bd=2)
                 btn.bind("<Button-1>", self.color_trigger)
@@ -28,6 +32,8 @@ class Map(tk.Frame):
                 btn.bind("<Button-3>", self.color_trigger)
                 btn.bind("<Enter> ", self.color)
                 btn.grid(row=row, column=column, sticky="nsew")
+                self.tmp.append(btn)
+            self.map.append(self.tmp)
 
         # Control Panel
         self.control_panel = tk.Frame(self, bg="white")
@@ -47,10 +53,10 @@ class Map(tk.Frame):
         self.grid_slaves(0, 0)[0].configure(bg="green", activebackground="green")
 
         # End point of map
-        self.grid_slaves(self.width - 1, self.height - 1)[0].configure(bg="red", activebackground="red")
+        self.grid_slaves(self.rows - 1, self.columns - 1)[0].configure(bg="red", activebackground="red")
 
         # Control Panel
-        self.control_panel.grid(row=self.height, columnspan=self.width, sticky="EW")
+        self.control_panel.grid(row=self.columns, columnspan=self.rows, sticky="EW")
 
     def color_trigger(self, event):
         """Method for triggering right color. If scroll is pressed stop coloring map, the left mouse button is used to
