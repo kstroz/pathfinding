@@ -1,4 +1,5 @@
 import tkinter as tk
+import node as n
 
 
 class Map(tk.Frame):
@@ -21,7 +22,7 @@ class Map(tk.Frame):
             self.rowconfigure(row, weight=1)
             for column in range(self.height):
                 self.columnconfigure(column, weight=1)
-                btn = tk.Button(self, relief="solid", bg="white", activebackground="white", bd=2)
+                btn = n.Node(self, relief="solid", bg="white", activebackground="white", bd=2)
                 btn.bind("<Button-1>", self.color_trigger)
                 btn.bind("<Button-2> ", self.color_trigger)
                 btn.bind("<Button-3>", self.color_trigger)
