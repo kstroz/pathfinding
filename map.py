@@ -95,3 +95,7 @@ class Map(tk.Frame):
         """Start algorithm depending on implementation"""
         pass
 
+    @staticmethod
+    def get_distance(node1, node2):
+        """Method for calculating distance between 2 nodes on map."""
+        return max(abs(node2.col_pos - node1.col_pos), abs(node2.row_pos - node1.row_pos))
