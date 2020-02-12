@@ -95,6 +95,32 @@ class Map(tk.Frame):
         """Start algorithm depending on implementation"""
         pass
 
+    def get_neighbours(self, node):
+        """Return list of all neighbour nodes for the node called in arguments on map"""
+        neighbours = []
+
+        # Column index of node
+        col = node.col_pos
+
+        # Row index of node
+        row = node.row_pos
+
+        for i_row in range(-1, 2):
+            for j_col in range(-1, 2):
+                # Check for not adding to list of neighbours the node passed as an argument.
+                if i_row == 0 and j_col == 0:
+                    continue
+
+                # Indexes of row and column of neighbour, if they are negative that means index will be out of bounds,
+                # so ignore them in this case otherwise add them to the list of neighbours.
+                neighbour_row = row + i_row
+                neighbour_col = col + j_col
+
+                if 0 <= neighbour_row < self.rows and 0 <= neighbour_col < self.columns:
+                    neighbours.append(self.map[neighbour_row][neighbour_col])
+
+        return neighbours
+
     @staticmethod
     def get_distance(node1, node2):
         """Method for calculating distance between 2 nodes on map."""
