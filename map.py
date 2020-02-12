@@ -26,7 +26,7 @@ class Map(tk.Frame):
             self.tmp = []
             for column in range(self.columns):
                 self.columnconfigure(column, weight=1)
-                btn = n.Node(self, relief="solid", bg="white", activebackground="white", bd=2)
+                btn = n.Node(self, column, row, relief="solid", bg="white", activebackground="white", bd=2)
                 btn.bind("<Button-1>", self.color_trigger)
                 btn.bind("<Button-2> ", self.color_trigger)
                 btn.bind("<Button-3>", self.color_trigger)
