@@ -50,7 +50,7 @@ class AStar(m.Map):
                     neighbour.g_cost = tentative_score
                     neighbour.h_cost = m.Map.get_distance(neighbour, goal)
 
-                    if neighbour not in open_nodes and neighbour.cget("bg") != "black":
+                    if neighbour not in open_nodes and neighbour.cget("bg") != self.wall_color:
                         open_nodes.append(neighbour)
         else:
             print("No possible path.")
@@ -65,5 +65,5 @@ class AStar(m.Map):
 
         path.reverse()
         for node in path[0:len(path) - 1]:
-            self.after(10, node.configure(bg="blue", activebackground="blue"))
+            self.after(10, node.configure(bg=self.path_color, activebackground=self.path_color))
             self.update_idletasks()

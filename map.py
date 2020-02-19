@@ -9,11 +9,18 @@ class Map(tk.Frame):
         self.rows = rows
         self.columns = columns
 
+        # Variables for declaring colors of map elements
+        self.start_color = "lawn green"
+        self.end_color = "firebrick1"
+        self.wall_color = "gray20"
+        self.path_color = "turquoise1"
+        self.map_color = "white"
+
         # Variable for storing reference to each node on map.
         self.map = []
 
         # Variables for declaring which color is currently used and if cursor should color Nodes at all
-        self.current_color = "white"
+        self.current_color = self.map_color
         self.color_flag = False
 
         # Variable for context
@@ -26,7 +33,7 @@ class Map(tk.Frame):
             self.tmp = []
             for column in range(self.columns):
                 self.columnconfigure(column, weight=1)
-                btn = n.Node(self, column, row, relief="solid", bg="white", activebackground="white", bd=2)
+                btn = n.Node(self, column, row, relief="solid", bg=self.map_color, activebackground=self.map_color, bd=2)
                 btn.bind("<Button-1>", self.color_trigger)
                 btn.bind("<Button-2> ", self.color_trigger)
                 btn.bind("<Button-3>", self.color_trigger)
@@ -42,22 +49,22 @@ class Map(tk.Frame):
         self.control_panel.columnconfigure(2, weight=1)
         self.control_panel.columnconfigure(3, weight=1)
         self.start_btn = tk.Button(self.control_panel, command=self.start,
-                                   relief="solid", text="Start", bd=2, bg="white")
+                                   relief="solid", text="Start", bd=2, height=3, bg="white")
         self.clear_map_btn = tk.Button(self.control_panel, command=self.clear_map,
-                                       relief="solid", text="Clear map", bd=2, bg="white")
+                                       relief="solid", text="Clear map", height=3, bd=2, bg="white")
         self.clear_path_btn = tk.Button(self.control_panel, command=self.clear_path,
-                                        relief="solid", text="Clear road", bd=2, bg="white")
-        self.context_lbl = tk.Label(self.control_panel, textvariable=self.context, bg="white")
+                                        relief="solid", text="Clear road", height=3, bd=2, bg="white")
+        self.context_lbl = tk.Label(self.control_panel, width=8, textvariable=self.context, bg="white")
         self.start_btn.grid(row=0, column=0, sticky="ew")
         self.clear_map_btn.grid(row=0, column=1, sticky="ew")
         self.clear_path_btn.grid(row=0, column=2, sticky="ew")
         self.context_lbl.grid(row=0, column=3, sticky="ew")
 
         # Start point of map
-        self.map[0][0].configure(bg="green", activebackground="green")
+        self.map[0][0].configure(bg=self.start_color, activebackground=self.start_color)
 
         # End point of map
-        self.map[self.rows - 1][self.columns - 1].configure(bg="red", activebackground="red")
+        self.map[self.rows - 1][self.columns - 1].configure(bg=self.end_color, activebackground=self.end_color)
 
         # Control Panel
         self.control_panel.grid(row=self.rows, columnspan=self.columns, sticky="EW")
@@ -71,36 +78,36 @@ class Map(tk.Frame):
         else:
             self.color_flag = True
             if event.num == 1:
-                self.current_color = "black"
+                self.current_color = self.wall_color
                 self.context.set("Drawing walls")
             elif event.num == 3:
-                self.current_color = "white"
+                self.current_color = self.map_color
                 self.context.set("Clearing walls")
 
         # Color currently clicked Node, its added because color function works only when you entering Node and not when
         # you are clicking on it.
-        if event.widget.cget("bg") != "green" and event.widget.cget("bg") != "red":
+        if event.widget.cget("bg") != self.start_color and event.widget.cget("bg") != self.end_color:
             event.widget.configure(bg=self.current_color, activebackground=self.current_color)
 
     def color(self, event):
         """When flag is set, color Node on which mouse is currently hovering on. Start and end points cannot be colored
         or erased"""
-        if self.color_flag and event.widget.cget("bg") != "green" and event.widget.cget("bg") != "red":
+        if self.color_flag and event.widget.cget("bg") != self.start_color and event.widget.cget("bg") != self.end_color:
             event.widget.configure(bg=self.current_color, activebackground=self.current_color)
 
     def clear_map(self):
         """Iterate through whole map and clear every wall"""
         for row in self.map:
             for col in row:
-                if col.cget("bg") != "white" and col.cget("bg") != "green" and col.cget("bg") != "red":
-                    col.configure(bg="white", activebackground="white")
+                if col.cget("bg") != self.map_color and col.cget("bg") != self.start_color and col.cget("bg") != self.end_color:
+                    col.configure(bg=self.map_color, activebackground=self.map_color)
 
     def clear_path(self):
         for row in self.map:
             for col in row:
-                if col.cget("bg") != "white" and col.cget("bg") != "green" and col.cget("bg") != "red" and col.cget(
-                        "bg") != "black":
-                    col.configure(bg="white", activebackground="white")
+                if col.cget("bg") != self.map_color and col.cget("bg") != self.start_color and col.cget("bg") != self.end_color and col.cget(
+                        "bg") != self.wall_color:
+                    col.configure(bg=self.map_color, activebackground=self.map_color)
 
     def start(self):
         """Start algorithm depending on implementation"""
