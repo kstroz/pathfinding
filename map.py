@@ -40,14 +40,18 @@ class Map(tk.Frame):
         self.control_panel.columnconfigure(0, weight=1)
         self.control_panel.columnconfigure(1, weight=1)
         self.control_panel.columnconfigure(2, weight=1)
+        self.control_panel.columnconfigure(3, weight=1)
         self.start_btn = tk.Button(self.control_panel, command=self.start,
                                    relief="solid", text="Start", bd=2, bg="white")
+        self.clear_map_btn = tk.Button(self.control_panel, command=self.clear_map,
+                                       relief="solid", text="Clear map", bd=2, bg="white")
+        self.clear_path_btn = tk.Button(self.control_panel, command=self.clear_path,
+                                        relief="solid", text="Clear road", bd=2, bg="white")
         self.context_lbl = tk.Label(self.control_panel, textvariable=self.context, bg="white")
-        self.clear_btn = tk.Button(self.control_panel, command=self.clear_map,
-                                   relief="solid", text="Clear map", bd=2, bg="white")
         self.start_btn.grid(row=0, column=0, sticky="ew")
-        self.context_lbl.grid(row=0, column=1, sticky="ew")
-        self.clear_btn.grid(row=0, column=2, sticky="ew")
+        self.clear_map_btn.grid(row=0, column=1, sticky="ew")
+        self.clear_path_btn.grid(row=0, column=2, sticky="ew")
+        self.context_lbl.grid(row=0, column=3, sticky="ew")
 
         # Start point of map
         self.map[0][0].configure(bg="green", activebackground="green")
@@ -89,6 +93,13 @@ class Map(tk.Frame):
         for row in self.map:
             for col in row:
                 if col.cget("bg") != "white" and col.cget("bg") != "green" and col.cget("bg") != "red":
+                    col.configure(bg="white", activebackground="white")
+
+    def clear_path(self):
+        for row in self.map:
+            for col in row:
+                if col.cget("bg") != "white" and col.cget("bg") != "green" and col.cget("bg") != "red" and col.cget(
+                        "bg") != "black":
                     col.configure(bg="white", activebackground="white")
 
     def start(self):

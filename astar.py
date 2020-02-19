@@ -9,6 +9,8 @@ class AStar(m.Map):
     def start(self):
         """A* algorithm implementation"""
         # Change each node parameter to starting one
+        self.clear_path()
+
         for row in self.map:
             for node in row:
                 node.g_cost = 10000
@@ -63,5 +65,5 @@ class AStar(m.Map):
 
         path.reverse()
         for node in path[0:len(path) - 1]:
-            self.after(10, node.configure(bg="blue"))
+            self.after(10, node.configure(bg="blue", activebackground="blue"))
             self.update_idletasks()
