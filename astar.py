@@ -1,5 +1,5 @@
-import tkinter as tk
 import map as m
+from tkinter import messagebox as mbox
 
 
 class AStar(m.Map):
@@ -53,7 +53,7 @@ class AStar(m.Map):
                     if neighbour not in open_nodes and neighbour.cget("bg") != self.wall_color:
                         open_nodes.append(neighbour)
         else:
-            print("No possible path.")
+            mbox.showerror("Error", "There is no path from starting node to end node.")
 
     def retrace_path(self, start, end):
         """Function for drawing  path by retracting it from by to start by parent of each node."""
