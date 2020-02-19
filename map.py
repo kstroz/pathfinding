@@ -33,7 +33,8 @@ class Map(tk.Frame):
             self.tmp = []
             for column in range(self.columns):
                 self.columnconfigure(column, weight=1)
-                btn = n.Node(self, column, row, relief="solid", bg=self.map_color, activebackground=self.map_color, bd=2)
+                btn = n.Node(self, column, row, relief="solid", bg=self.map_color, activebackground=self.map_color,
+                             bd=2)
                 btn.bind("<Button-1>", self.color_trigger)
                 btn.bind("<Button-2> ", self.color_trigger)
                 btn.bind("<Button-3>", self.color_trigger)
@@ -92,22 +93,30 @@ class Map(tk.Frame):
     def color(self, event):
         """When flag is set, color Node on which mouse is currently hovering on. Start and end points cannot be colored
         or erased"""
-        if self.color_flag and event.widget.cget("bg") != self.start_color and event.widget.cget("bg") != self.end_color:
+        if self.color_flag and event.widget.cget("bg") != self.start_color and event.widget.cget(
+                "bg") != self.end_color:
             event.widget.configure(bg=self.current_color, activebackground=self.current_color)
 
     def clear_map(self):
-        """Iterate through whole map and clear every wall"""
+        """Iterate through whole map and clear everything"""
         for row in self.map:
-            for col in row:
-                if col.cget("bg") != self.map_color and col.cget("bg") != self.start_color and col.cget("bg") != self.end_color:
-                    col.configure(bg=self.map_color, activebackground=self.map_color)
+            for node in row:
+                if node.cget("bg") != self.map_color and node.cget("bg") != self.start_color and node.cget(
+                        "bg") != self.end_color:
+                    node.configure(bg=self.map_color, activebackground=self.map_color)
 
     def clear_path(self):
+        """Iterate through whole map and clear previous path"""
         for row in self.map:
-            for col in row:
-                if col.cget("bg") != self.map_color and col.cget("bg") != self.start_color and col.cget("bg") != self.end_color and col.cget(
+            for node in row:
+                node.g_cost = 10000
+                node.h_cost = 0
+                node.parent = None
+
+                if node.cget("bg") != self.map_color and node.cget("bg") != self.start_color and node.cget(
+                        "bg") != self.end_color and node.cget(
                         "bg") != self.wall_color:
-                    col.configure(bg=self.map_color, activebackground=self.map_color)
+                    node.configure(bg=self.map_color, activebackground=self.map_color)
 
     def start(self):
         """Start algorithm depending on implementation"""

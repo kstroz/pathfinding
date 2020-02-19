@@ -8,14 +8,8 @@ class AStar(m.Map):
 
     def start(self):
         """A* algorithm implementation"""
-        # Change each node parameter to starting one
+        # Change each node parameter and color to starting ones.
         self.clear_path()
-
-        for row in self.map:
-            for node in row:
-                node.g_cost = 10000
-                node.h_cost = 0
-                node.parent = None
 
         # Start point
         start = self.map[0][0]
