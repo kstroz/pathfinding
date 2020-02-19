@@ -45,7 +45,12 @@ class AStar(m.Map):
                     neighbour.h_cost = m.Map.get_distance(neighbour, goal)
 
                     if neighbour not in open_nodes and neighbour.cget("bg") != self.wall_color:
+                        if neighbour.cget("bg") != self.start_color and neighbour.cget("bg") != self.end_color:
+                            self.after(self.reload_time, neighbour.configure(bg=self.neighbour_color,
+                                                                             activebackground=self.neighbour_color))
+
                         open_nodes.append(neighbour)
+            self.update_idletasks()
         else:
             mbox.showerror("Error", "There is no path from starting node to end node.")
 
@@ -59,5 +64,5 @@ class AStar(m.Map):
 
         path.reverse()
         for node in path[0:len(path) - 1]:
-            self.after(10, node.configure(bg=self.path_color, activebackground=self.path_color))
+            self.after(self.reload_time, node.configure(bg=self.path_color, activebackground=self.path_color))
             self.update_idletasks()

@@ -9,12 +9,17 @@ class Map(tk.Frame):
         self.rows = rows
         self.columns = columns
 
+        # Variable for deciding how long in ms it takes between recoloring each node when visualizing path
+        # and neighbours of current node.
+        self.reload_time = 20
+
         # Variables for declaring colors of map elements
         self.start_color = "lawn green"
         self.end_color = "firebrick1"
         self.wall_color = "gray20"
         self.path_color = "turquoise1"
         self.map_color = "white"
+        self.neighbour_color = "MediumOrchid1"
 
         # Variable for storing reference to each node on map.
         self.map = []
